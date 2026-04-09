@@ -77,6 +77,18 @@ export function Navbar() {
                     My Profiles
                   </DropdownMenuItem>
                   <DropdownMenuItem
+                    onClick={() => router.push("/organization")}
+                    className="cursor-pointer focus:bg-[#1C1C1C] focus:text-[#F0F0F0]"
+                  >
+                    My Organization
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push("/organization/settings")}
+                    className="cursor-pointer focus:bg-[#1C1C1C] focus:text-[#F0F0F0]"
+                  >
+                    Organization Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
                     onClick={() => router.push("/organizations/new")}
                     className="cursor-pointer focus:bg-[#1C1C1C] focus:text-[#F0F0F0]"
                   >
@@ -90,11 +102,12 @@ export function Navbar() {
                       Admin Dashboard
                     </DropdownMenuItem>
                   )}
+                  <DropdownMenuSeparator className="bg-[#2A2A2A]" />
                   <DropdownMenuItem
                     onClick={() => router.push("/settings")}
                     className="cursor-pointer focus:bg-[#1C1C1C] focus:text-[#F0F0F0]"
                   >
-                    Settings
+                    Account Settings
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-[#2A2A2A]" />
                   <DropdownMenuItem

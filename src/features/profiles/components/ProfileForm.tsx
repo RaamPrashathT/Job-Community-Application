@@ -14,7 +14,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "./DatePicker";
 import { useState } from "react";
 
-export function ProfileForm() {
+interface ProfileFormProps {
+  defaultName?: string;
+}
+
+export function ProfileForm({ defaultName }: Readonly<ProfileFormProps>) {
   const { data: user } = useCurrentUser();
   const createProfileMutation = useCreateProfile();
   const [skills, setSkills] = useState<string[]>([]);
@@ -30,7 +34,7 @@ export function ProfileForm() {
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      profileName: "",
+      profileName: defaultName || "",
       isDefault: false,
       whyWorkHere: "",
       skills: [],

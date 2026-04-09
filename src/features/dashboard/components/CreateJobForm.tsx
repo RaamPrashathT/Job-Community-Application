@@ -21,6 +21,7 @@ const jobSchema = z.object({
   location: z.string().min(1, "Location is required"),
   type: z.enum(["Remote", "On-site", "Hybrid"]),
   requiredSkills: z.array(z.string()).min(1, "At least one skill is required"),
+  openings: z.number().min(1, "At least 1 opening is required").max(100, "Maximum 100 openings allowed"),
 });
 
 type JobData = z.infer<typeof jobSchema>;
@@ -110,25 +111,41 @@ export function CreateJobForm() {
         </div>
       </div>
 
-      <div>
-        <Label className="text-xs uppercase tracking-widest text-[#AAAAAA]">Job Type</Label>
-        <Select onValueChange={(value) => setValue("type", value as "Remote" | "On-site" | "Hybrid")}>
-          <SelectTrigger className="mt-2 bg-[#0D0D0D] border-[#2A2A2A] text-[#F0F0F0]">
-            <SelectValue placeholder="Select job type" />
-          </SelectTrigger>
-          <SelectContent className="bg-[#111111] border-[#2A2A2A]">
-            <SelectItem value="Remote" className="text-[#F0F0F0] focus:bg-[#1C1C1C] focus:text-[#F0F0F0]">
-              Remote
-            </SelectItem>
-            <SelectItem value="On-site" className="text-[#F0F0F0] focus:bg-[#1C1C1C] focus:text-[#F0F0F0]">
-              On-site
-            </SelectItem>
-            <SelectItem value="Hybrid" className="text-[#F0F0F0] focus:bg-[#1C1C1C] focus:text-[#F0F0F0]">
-              Hybrid
-            </SelectItem>
-          </SelectContent>
-        </Select>
-        {errors.type && <p className="text-xs text-[#F97C7C] mt-1">{errors.type.message}</p>}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label className="text-xs uppercase tracking-widest text-[#AAAAAA]">Job Type</Label>
+          <Select onValueChange={(value) => setValue("type", value as "Remote" | "On-site" | "Hybrid")}>
+            <SelectTrigger className="mt-2 bg-[#0D0D0D] border-[#2A2A2A] text-[#F0F0F0]">
+              <SelectValue placeholder="Select job type" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#111111] border-[#2A2A2A]">
+              <SelectItem value="Remote" className="text-[#F0F0F0] focus:bg-[#1C1C1C] focus:text-[#F0F0F0]">
+                Remote
+              </SelectItem>
+              <SelectItem value="On-site" className="text-[#F0F0F0] focus:bg-[#1C1C1C] focus:text-[#F0F0F0]">
+                On-site
+              </SelectItem>
+              <SelectItem value="Hybrid" className="text-[#F0F0F0] focus:bg-[#1C1C1C] focus:text-[#F0F0F0]">
+                Hybrid
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          {errors.type && <p className="text-xs text-[#F97C7C] mt-1">{errors.type.message}</p>}
+        </div>
+
+        <div>
+          <Label className="text-xs uppercase tracking-widest text-[#AAAAAA]">Number of Openings</Label>
+          <Input
+            type="number"
+            {...register("openings", { valueAsNumber: true })}
+            placeholder="e.g., 5"
+            min="1"
+            max="100"
+            defaultValue="1"
+            className="mt-2 bg-[#0D0D0D] border-[#2A2A2A] text-[#F0F0F0]"
+          />
+          {errors.openings && <p className="text-xs text-[#F97C7C] mt-1">{errors.openings.message}</p>}
+        </div>
       </div>
 
       <div>

@@ -55,7 +55,7 @@ export function LoginForm() {
         <AuthInput
           label="Email Address"
           type="email"
-          placeholder="dev@obsidian.foundry"
+          placeholder="dev@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           error={errors.email}
@@ -70,7 +70,6 @@ export function LoginForm() {
               href="/forgot-password"
               className="text-xs uppercase tracking-widest text-[#7EE8A2] hover:underline"
             >
-              Forgot?
             </Link>
           </div>
           <input
@@ -131,9 +130,9 @@ export function LoginForm() {
       </div>
 
       <p className="text-center text-xs text-[#666666]">
-        New to the foundry?{" "}
+        New to the Nightshift?{" "}
         <Link href="/register" className="text-[#7EE8A2] font-semibold hover:underline">
-          Request access
+          Register
         </Link>
       </p>
 

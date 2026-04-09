@@ -1,5 +1,5 @@
 import { getMyJobs } from "../actions/get-my-jobs";
-import { MapPin, Briefcase, Calendar, Plus } from "lucide-react";
+import { MapPin, Briefcase, Calendar, Plus, Users } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -135,8 +135,18 @@ export async function ProviderDashboard({ organization }: Readonly<ProviderDashb
                     <Calendar className="h-3 w-3" />
                     {format(new Date(job.createdAt), "MMM d, yyyy")}
                   </span>
+                  <span className="flex items-center gap-1">
+                    <Users className="h-3 w-3" />
+                    {job._count?.applications || 0} applicants
+                  </span>
                 </div>
-                <p className="text-[#AAAAAA] text-sm line-clamp-2">{job.description}</p>
+                <p className="text-[#AAAAAA] text-sm line-clamp-2 mb-3">{job.description}</p>
+                <Link href={`/jobs/${job.id}/applicants`}>
+                  <Button className="w-full bg-transparent border border-[#2A2A2A] text-[#AAAAAA] hover:bg-[#1C1C1C] hover:text-[#F0F0F0] hover:border-[#7EE8A2]">
+                    <Users className="h-4 w-4 mr-2" />
+                    Manage Applicants
+                  </Button>
+                </Link>
               </div>
             ))}
           </div>

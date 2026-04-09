@@ -18,22 +18,32 @@ enum OrgStatus {
     REJECTED
 }
 
+enum ApplicationStatus {
+    PENDING
+    RECRUITED
+    REJECTED
+}
+
 model Organization {
     id          String    @id @default(cuid())
     name        String
     location    String
     description String    @db.Text
     status      OrgStatus @default(PENDING)
+    logoUrl     String?  
+    rating      Float     @default(0) 
 
     creatorId String
     creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
 
-    jobs JobPost[]
+    jobs     JobPost[]
+    reviews  OrganizationReview[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@index([creatorId])
+    @@index([status])
 }
 
 model User {
@@ -55,6 +65,7 @@ model User {
     professionalProfiles ProfessionalProfile[]
     organizations        Organization[]
     jobApplications      JobApplication[]
+    organizationReviews  OrganizationReview[]
 }
 
 model Account {
@@ -189,6 +200,7 @@ model JobPost {
     location       String
     type           String   // e.g., "Remote", "On-site", "Hybrid"
     requiredSkills String[] // Array of skill names (normalized: lowercase, spaces to -)
+    openings       Int      @default(1) // Number of positions available
 
     organization  Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
     applications  JobApplication[]
@@ -200,17 +212,37 @@ model JobPost {
 }
 
 model JobApplication {
-    id        String @id @default(cuid())
+    id        String            @id @default(cuid())
     jobPostId String
     userId    String
     profileId String
+    status    ApplicationStatus @default(PENDING)
 
     jobPost JobPost @relation(fields: [jobPostId], references: [id], onDelete: Cascade)
     user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@unique([jobPostId, userId])
     @@index([userId])
     @@index([jobPostId])
+}
+
+model OrganizationReview {
+    id             String       @id @default(cuid())
+    organizationId String
+    userId         String
+    rating         Int          // 1-5 stars
+    comment        String       @db.Text
+
+    organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([organizationId, userId]) // One review per user per organization
+    @@index([organizationId])
+    @@index([userId])
 }

@@ -67,7 +67,7 @@ export function RegisterForm() {
         <AuthInput
           label="Email Address"
           type="email"
-          placeholder="dev@obsidian.foundry"
+          placeholder="dev@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           error={errors.email}

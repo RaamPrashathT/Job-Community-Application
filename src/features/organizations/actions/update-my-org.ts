@@ -44,7 +44,7 @@ export async function updateMyOrganization(data: z.infer<typeof updateOrgSchema>
   } catch (error) {
     console.error("Update organization error:", error);
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors[0].message };
+      return { success: false, error: error.issues[0].message };
     }
     return { success: false, error: "Failed to update organization" };
   }

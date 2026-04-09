@@ -32,7 +32,7 @@ export function ProfileForm({ defaultName }: Readonly<ProfileFormProps>) {
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<ProfileFormData>({
-    resolver: zodResolver(profileFormSchema),
+    resolver: zodResolver(profileFormSchema) as any,
     defaultValues: {
       profileName: defaultName || "",
       isDefault: false,

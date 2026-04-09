@@ -13,7 +13,7 @@ import {
 import { useRouter } from "next/navigation";
 
 export function Navbar() {
-  const { data: user } = useCurrentUser();
+  const { data: user, isLoading } = useCurrentUser();
   const logoutMutation = useLogout();
   const router = useRouter();
 
@@ -44,13 +44,21 @@ export function Navbar() {
               Discover
             </Link>
             <Link
+              href="/community"
+              className="text-sm text-[#AAAAAA] hover:text-[#F0F0F0] transition-colors"
+            >
+              Community
+            </Link>
+            <Link
               href="/dashboard"
               className="text-sm text-[#AAAAAA] hover:text-[#F0F0F0] transition-colors"
             >
               Dashboard
             </Link>
 
-            {user && (
+            {isLoading ? (
+              <div className="h-9 w-9 rounded-full bg-[#1C1C1C] border border-[#2A2A2A] animate-pulse" />
+            ) : user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button className="focus:outline-none">
@@ -118,6 +126,13 @@ export function Navbar() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+            ) : (
+              <Link
+                href="/login"
+                className="px-4 py-2 bg-[#7EE8A2] text-[#060F0A] rounded-lg text-sm font-semibold hover:bg-[#6DD891] transition-colors"
+              >
+                Login
+              </Link>
             )}
           </div>
         </div>

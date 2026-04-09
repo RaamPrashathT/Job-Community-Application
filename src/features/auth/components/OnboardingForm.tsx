@@ -83,7 +83,7 @@ export function OnboardingForm() {
           </div>
         </div>
 
-        {onboardingMutation.error && (
+        {(onboardingMutation.isError || onboardingMutation.data?.error) && (
           <div className="p-3 bg-[#2E1010] border border-[#5C2020] rounded-lg">
             <p className="text-sm text-[#F97C7C]">
               {onboardingMutation.data?.error || "Failed to complete onboarding. Please try again."}

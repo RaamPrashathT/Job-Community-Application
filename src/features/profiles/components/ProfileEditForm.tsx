@@ -33,7 +33,7 @@ export function ProfileEditForm({ profile, userId, profileId }: Readonly<Profile
     setValue,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<ProfileFormData>({
-    resolver: zodResolver(profileFormSchema),
+    resolver: zodResolver(profileFormSchema) as any,
     defaultValues: {
       profileName: profile.profileName,
       isDefault: profile.isDefault,

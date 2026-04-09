@@ -10,9 +10,10 @@ const createJobSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   location: z.string().min(1, "Location is required"),
   type: z.enum(["Remote", "On-site", "Hybrid"], {
-    errorMap: () => ({ message: "Please select a valid job type" }),
+    message: "Please select a valid job type",
   }),
   requiredSkills: z.array(z.string()).min(1, "At least one skill is required"),
+  openings: z.number().min(1, "At least 1 opening is required").max(100, "Maximum 100 openings allowed"),
 });
 
 export async function createJob(data: z.infer<typeof createJobSchema>) {
@@ -44,6 +45,7 @@ export async function createJob(data: z.infer<typeof createJobSchema>) {
         location: validated.location,
         type: validated.type,
         requiredSkills: validated.requiredSkills,
+        openings: validated.openings,
         organizationId: organization.id,
       },
     });
@@ -53,7 +55,7 @@ export async function createJob(data: z.infer<typeof createJobSchema>) {
   } catch (error) {
     console.error("Create job error:", error);
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors[0].message };
+      return { success: false, error: error.issues[0].message };
     }
     return { success: false, error: "Failed to create job" };
   }

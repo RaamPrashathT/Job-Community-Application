@@ -2,12 +2,15 @@ import { createClient } from 'redis';
 
 const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
 
+// Check if URL uses rediss:// protocol for TLS
+const usesTLS = redisUrl.startsWith('rediss://');
+
 const redis = createClient({
     url: redisUrl,
-    socket: process.env.NODE_ENV === 'production' ? {
+    socket: usesTLS ? {
         tls: true,
         rejectUnauthorized: false
-    } : {}
+    } : undefined
 });
 
 redis.on('error', (err) => console.error('Redis Client Error:', err));

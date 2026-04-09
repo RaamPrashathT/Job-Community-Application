@@ -114,7 +114,13 @@ export async function login(payload: LoginPayload): Promise<LoginResponse> {
     // Create session
     await createSession(user.id, user.onboarded);
 
-    const redirectTo = user.onboarded ? "/discover" : "/onboarding";
+    // Redirect admins to admin dashboard
+    let redirectTo = "/discover";
+    if (user.role === "ADMIN") {
+      redirectTo = "/organizations";
+    } else if (!user.onboarded) {
+      redirectTo = "/onboarding";
+    }
 
     return {
       success: true,

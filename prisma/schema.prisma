@@ -7,11 +7,39 @@ datasource db {
     provider = "postgresql"
 }
 
+enum Role {
+    USER
+    ADMIN
+}
+
+enum OrgStatus {
+    PENDING
+    ACTIVE
+    REJECTED
+}
+
+model Organization {
+    id          String    @id @default(cuid())
+    name        String
+    location    String
+    description String    @db.Text
+    status      OrgStatus @default(PENDING)
+
+    creatorId String
+    creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([creatorId])
+}
+
 model User {
     id       String  @id @default(cuid())
     username String
     email    String  @unique
     phone    String?
+    role     Role    @default(USER)
 
     emailVerified Boolean @default(false)
     TFAEnabled    Boolean @default(false)
@@ -23,6 +51,7 @@ model User {
     accounts             Account[]
     verificationTokens   VerificationToken[]
     professionalProfiles ProfessionalProfile[]
+    organizations        Organization[]
 }
 
 model Account {
@@ -71,7 +100,7 @@ model ProfessionalProfile {
     courses      Course[]
     educations   Education[]
     links        SocialLink[]
-    skills       Skill[] // Implicit many-to-many
+    skills       Skill[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

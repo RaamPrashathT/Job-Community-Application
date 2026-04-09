@@ -60,8 +60,13 @@ export async function verify(payload: VerifyPayload): Promise<VerifyResponse> {
     // Create session
     await createSession(verificationToken.user.id, verificationToken.user.onboarded);
 
-    // Determine redirect
-    const redirectTo = verificationToken.user.onboarded ? "/discover" : "/onboarding";
+    // Determine redirect - admins go to admin dashboard
+    let redirectTo = "/discover";
+    if (verificationToken.user.role === "ADMIN") {
+      redirectTo = "/organizations";
+    } else if (!verificationToken.user.onboarded) {
+      redirectTo = "/onboarding";
+    }
 
     return {
       success: true,

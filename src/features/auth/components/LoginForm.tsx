@@ -136,6 +136,15 @@ export function LoginForm() {
           Request access
         </Link>
       </p>
+
+      <div className="pt-4 border-t border-[#2A2A2A]">
+        <p className="text-center text-xs text-[#666666]">
+          Administrative access?{" "}
+          <Link href="/admin-login" className="text-[#7EE8A2] font-semibold hover:underline">
+            Admin Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

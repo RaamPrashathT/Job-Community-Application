@@ -15,6 +15,7 @@ export async function getCurrentUser() {
       email: true,
       username: true,
       phone: true,
+      role: true,
       emailVerified: true,
       TFAEnabled: true,
       onboarded: true,

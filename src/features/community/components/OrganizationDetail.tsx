@@ -400,12 +400,7 @@ export function OrganizationDetail({ organizationId }: Readonly<OrganizationDeta
                           </div>
                         </div>
                         <p className="text-[#AAAAAA] leading-relaxed text-[15px] mb-4">{review.comment}</p>
-                        <div className="flex items-center gap-3">
-                          <button className="flex items-center gap-2 px-3 py-1.5 bg-[#0D0D0D] border border-[#2A2A2A] rounded-lg text-sm text-[#AAAAAA] hover:text-[#F0F0F0] hover:border-[#7EE8A2] transition-colors">
-                            <ThumbsUp className="h-3.5 w-3.5" />
-                            Helpful
-                          </button>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>

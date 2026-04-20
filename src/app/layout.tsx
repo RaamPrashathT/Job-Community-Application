@@ -31,7 +31,7 @@ export default function RootLayout({
             className={`${syne.variable} ${dmSans.variable} h-full antialiased dark`}
             style={{ fontFamily: "DM Sans, sans-serif" }}
         >
-            <body className="min-h-full flex flex-col bg-[#050505] text-[#F0F0F0]">
+            <body className="min-h-full flex flex-col bg-black text-[#EDEDED]">
                 <Providers>{children}</Providers>
             </body>
         </html>

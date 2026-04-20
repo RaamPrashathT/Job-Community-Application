@@ -110,54 +110,55 @@ export function JobFeed() {
   return (
     <>
       {/* Search Bar */}
-      <div className="mb-6">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#666666]" />
+      <div className="mb-8">
+        <div className="relative group">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#3ECF8E] to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#8B8B8B] z-10" />
           <Input
             placeholder="Search jobs by title, company, or location..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-[#0D0D0D] border-[#2A2A2A] text-[#F0F0F0]"
+            className="relative pl-12 bg-[#0B0C10] border-[#2E2E2E] text-white focus-visible:border-[#3ECF8E] focus-visible:ring-1 focus-visible:ring-[#3ECF8E]/50 transition-all rounded-xl h-14 shadow-lg text-lg"
           />
         </div>
       </div>
 
       {allJobs.length === 0 ? (
-        <div className="p-12 bg-[#111111] border border-[#2A2A2A] rounded-xl text-center">
-          <Briefcase className="h-16 w-16 text-[#666666] mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-[#F0F0F0] mb-2">
-            {debouncedSearch ? "No Jobs Found" : "No Jobs Available"}
+        <div className="p-16 bg-[#111111] border border-[#1F1F1F] rounded-xl text-center shadow-2xl">
+          <Briefcase className="h-20 w-20 text-[#2E2E2E] mx-auto mb-6" />
+          <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>
+            {debouncedSearch ? "No matching roles found" : "No roles available"}
           </h3>
-          <p className="text-[#666666]">
-            {debouncedSearch ? "Try adjusting your search" : "Check back later for new opportunities"}
+          <p className="text-[#8B8B8B] text-lg">
+            {debouncedSearch ? "Try adjusting your search criteria" : "Check back later for new opportunities"}
           </p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {allJobs.map((job: Job) => (
             <div
               key={job.id}
-              className="p-6 bg-[#111111] border border-[#2A2A2A] rounded-xl hover:border-[#7EE8A2] transition-colors"
+              className="p-8 bg-[#111111] border border-[#1F1F1F] rounded-xl hover:border-[#3ECF8E] hover:bg-[#151515] hover:shadow-[0_0_20px_rgba(62,207,142,0.15)] transition-all duration-300 transform hover:-translate-y-1 group"
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-[20px] font-bold text-[#F0F0F0]" style={{ fontFamily: "Syne, sans-serif" }}>
+                    <h3 className="text-[24px] font-bold text-white group-hover:text-[#3ECF8E] transition-colors" style={{ fontFamily: "'Syne', sans-serif" }}>
                       {job.title}
                     </h3>
                     {job.hasApplied && (
-                      <span className="flex items-center gap-1 px-2 py-1 bg-[#0D2E1A] text-[#7EE8A2] border border-[#1A5C30] rounded-full text-xs">
+                      <span className="flex items-center gap-1 px-2.5 py-1 bg-[#3ECF8E]/10 text-[#3ECF8E] border border-[#3ECF8E]/20 rounded-full text-xs font-semibold">
                         <CheckCircle2 className="h-3 w-3" />
                         Applied
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-2 text-[#7EE8A2] text-sm mb-3">
+                  <div className="flex items-center gap-2 text-[#8B8B8B] font-medium text-sm mb-4">
                     <Building2 className="h-4 w-4" />
                     {job.organization.name}
                   </div>
                 </div>
-                <span className={`px-3 py-1 border rounded-full text-xs font-medium ${getJobTypeBadge(job.type)}`}>
+                <span className={`px-4 py-1.5 border rounded-full text-xs font-bold ${getJobTypeBadge(job.type)}`}>
                   {job.type}
                 </span>
               </div>
@@ -165,18 +166,18 @@ export function JobFeed() {
               <p className="text-[#AAAAAA] leading-relaxed mb-4">{job.description}</p>
 
               {/* Required Skills */}
-              <div className="mb-4">
-                <p className="text-xs uppercase tracking-widest text-[#666666] mb-2">Required Skills</p>
+              <div className="mb-6">
+                <p className="text-xs uppercase tracking-widest text-[#555] font-bold mb-3">Required Stack</p>
                 <div className="flex flex-wrap gap-2">
                   {job.requiredSkills.map((skill) => {
                     const isMatching = job.matchingSkills.includes(skill);
                     return (
                       <span
                         key={skill}
-                        className={`px-2 py-1 border rounded-full text-xs ${
+                        className={`px-3 py-1.5 border rounded opacity-90 text-xs font-mono tracking-tight ${
                           isMatching
-                            ? "bg-[#0D2E1A] text-[#7EE8A2] border-[#1A5C30]"
-                            : "bg-[#1C1C1C] text-[#666666] border-[#2A2A2A]"
+                            ? "bg-[#3ECF8E]/10 text-[#3ECF8E] border-[#3ECF8E]/30"
+                            : "bg-[#1C1C1C] text-[#8B8B8B] border-[#2E2E2E]"
                         }`}
                       >
                         {skill}
@@ -186,14 +187,14 @@ export function JobFeed() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-[#2A2A2A]">
-                <div className="flex items-center gap-6 text-xs text-[#666666]">
-                  <span className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3" />
+              <div className="flex items-center justify-between pt-6 border-t border-[#1F1F1F]">
+                <div className="flex items-center gap-6 text-sm text-[#555]">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <MapPin className="h-4 w-4" />
                     {job.location}
                   </span>
-                  <span className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Calendar className="h-4 w-4" />
                     Posted {format(new Date(job.createdAt), "MMM d, yyyy")}
                   </span>
                 </div>
@@ -201,7 +202,7 @@ export function JobFeed() {
                 {!job.hasApplied && (
                   <Button
                     onClick={() => setSelectedJob({ id: job.id, title: job.title, company: job.organization.name })}
-                    className="bg-[#7EE8A2] text-[#060F0A] hover:bg-[#6DD891]"
+                    className="bg-[#3ECF8E] border border-[#3ECF8E] text-black hover:bg-[#24B47E] hover:border-[#24B47E] hover:shadow-[0_0_15px_rgba(62,207,142,0.4)] transition-all font-bold px-6"
                   >
                     Apply Now
                   </Button>

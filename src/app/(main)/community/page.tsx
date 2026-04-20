@@ -137,16 +137,6 @@ export default function CommunityPage() {
                           </span>
                         </div>
                         
-                        {org.rating > 0 && (
-                          <div className="flex items-center gap-2 text-sm">
-                            <div className="p-1.5 bg-[#2E1A0D] border border-[#5C3A1A] rounded">
-                              <TrendingUp className="h-3.5 w-3.5 text-[#E8A27E]" />
-                            </div>
-                            <span className="text-[#AAAAAA]">
-                              Rated by <span className="text-[#F0F0F0] font-semibold">{org._count?.reviews}</span> {org._count?.reviews === 1 ? "employee" : "employees"}
-                            </span>
-                          </div>
-                        )}
                       </div>
                     </div>
                   </div>
